@@ -1,5 +1,3 @@
-import { Job } from "@prisma/client";
-
 export type JobsListResponseParams = {
   uid: string;
   title: string;
