@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { ChangeEvent, Fragment, useState } from "react";
 
 import prisma from "@helpers/prisma";
@@ -160,7 +160,7 @@ export default function Apply({ job }: { job: jobType }) {
   return <ApplyLayout job={job}>{form}</ApplyLayout>;
 }
 
-export async function getStaticPaths() {
+/* export async function getStaticPaths() {
   const data = await prisma.job.findMany({
     select: {
       uid: true,
@@ -176,8 +176,8 @@ export async function getStaticPaths() {
     fallback: false, // false or 'blocking'
   };
 }
-
-export const getStaticProps: GetStaticProps = async (context) => {
+ */
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const uid = context.params?.uid;
   const job = await prisma.job.findUnique({
     where: {
@@ -203,6 +203,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
       },
     },
   });
+  if (!job) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
