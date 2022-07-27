@@ -34,11 +34,22 @@ export default class JobEntity {
 
     if (!user) throw new NotFoundError("Not found");
 
-    return prisma.job.findMany({
+    const jobs = await prisma.job.findMany({
       where: {
         companyId: user.companyId,
       },
+      select: {
+        _count: {
+          select: {
+            Candidate: true,
+          },
+        },
+        id: true,
+        uid: true,
+        title: true,
+      },
     });
+    return jobs;
   }
   async apply(data: JobsApplyRequestParam) {
     const applied = await prisma.candidate.findFirst({
@@ -53,7 +64,7 @@ export default class JobEntity {
       data: {
         name: data.name,
         email: data.email,
-        address: data.addres,
+        address: data.address,
         Job: {
           connect: {
             id: data.jobid,

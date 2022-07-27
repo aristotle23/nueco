@@ -1,7 +1,7 @@
 export type JobsApplyRequestParam = {
   name: string;
   email: string;
-  addres: string;
+  address: string;
   jobid: number;
   fields: { text: string; fieldId: number }[];
 };

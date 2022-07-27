@@ -44,7 +44,7 @@ export default function Jobs() {
                 {job.title}
                 <br />
                 <small className="font-medium">
-                  URL: <span className="font-light">{`${process.env.appUrl}/jobs/${job.uid}`}</span>
+                  Candidates: <span className="font-light">{job._count.Candidate}</span>
                 </small>
               </h4>
 
